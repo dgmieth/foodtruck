@@ -4,7 +4,7 @@ const mysql =require('mysql2/promise')
 const pool = mysql.createPool({
     multipleStatements: true,
     host: process.env.DB_HOST,
-    database: process.env.NODE_ENV==='prod' ? process.env.DB_DATABASE_PRODUCTION : process.env.DB_DATABASE_TEST,
+    database: process.env.DB_DATABASE_PRODUCTION,
     //database: process.env.DB_DATABASE,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,

@@ -7,8 +7,8 @@ const Send = require('./sendNotification.js')//main function
 //commong objects
 
 exports.sendNotification = (data) => {
-    const apiId = process.env.NODE_ENV === `prod` ? process.env.OSIGNAL_APP_ID : process.env.OSIGNAL_APP_ID_DEV
-    const apiKey = process.env.NODE_ENV === `prod` ? process.env.OSIGNAL_API_KEY : process.env.OSIGNAL_API_KEY_DEV
+    const apiId = process.env.OSIGNAL_APP_ID 
+    const apiKey =  process.env.OSIGNAL_API_KEY
     console.log('sendNotif fucntion ->',data)
     return axios({
         method: 'post',

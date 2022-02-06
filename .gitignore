@@ -1,4 +1,4 @@
-.env
-dockerfile
-traefic.yml
-node_modules/
+mainApplication/.env
+mainApplication/dockerfile
+mainApplication/traefic.yml
+mainApplication/node_modules/

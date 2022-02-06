@@ -55,13 +55,8 @@ app.use('/services',servicesRouter)
 app.use(pageRouter)
 
 //check developer settings 
-if(process.env.NODE_ENV!=='prod'){
-    console.log(process.env.NODE_ENV)
-    console.log(parseInt(process.env.DEV_DOOR))
-}
-
 //other variables
-const httpPort = process.env.NODE_ENV===`prod` ? parseInt(process.env.PROD_DOOR) : parseInt(process.env.DEV_DOOR)
+const httpPort = parseInt(process.env.PROD_DOOR)
 //server creation
 http.createServer(app).listen(httpPort)
 
