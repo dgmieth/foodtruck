@@ -1,0 +1,260 @@
+<%- include('_metadata/beg.ejs', {pageTitle}) %>
+<!-- CSS FILES START HERE -->
+    <!-- BOOTSTRAP CSS -->
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <!-- FLATPKR CSS -->
+    <link rel="stylesheet" href="/css/flatpkr/flatpkr.min.css">
+    <style>
+      html,body {
+        height: 100%!important;
+      }
+      </style>
+      <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> -->
+      <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+<!-- CSS FILES END HERE -->
+</head>
+<body> 
+  <!-- modal -->
+  <div class="modal fade" id="modalDiv" tabindex="-1" role="dialog" aria-labelledby="modalDivTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalDivTitle">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div id="modalBody" class="modal-body">
+            ...
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button id="btnModalExecuteAction" type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+  </div>
+  <!-- alert -->  
+  <div id="alert" class="alert alert-dismissible fade" style="position: absolute;right: 0;top:0;margin-top: 6px;width: 70%;" role="alert">
+    <div id="text" class="w-100 mx-auto my-auto text-center">
+
+    </div>
+    <button type="button" class="close" onclick="uiCtrl.showHideAlert(null,null,'hide')" style="float: right;">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <%- include('headerFooter/login/loginHeader.ejs') %>
+<!-- MAIN CONTENT FROM HERE -->
+    <!-- SIDE BAR MENU -->
+    <style>
+        * {
+            margin:0px;
+            padding:0px;
+            box-sizing:border-box;
+            font-family:sans-serif;
+          }
+           
+          #sidebar-wrapper {
+            position:absolute;
+            top:10%;
+            left:-200px;
+            width:200px;
+            height:92%;
+            background:rgba(51,59,78,1)!important;
+            transition: all 300ms linear;
+            z-index: 10;
+          }
+          #sidebar-wrapper.active {
+            left:0px;
+          }
+          #sidebar-wrapper .toggle-btn {
+            position:absolute;
+            left:220px;
+            top:10px;
+            transition: display 1s;
+          }
+          #sidebar-wrapper .toggle-btn span {
+            display:block;
+            width:30px;
+            height:5px;
+            background:#212529;
+            margin:5px 0px;
+            cursor:pointer;
+          }
+          #sidebar-wrapper div.list div.item, button.item {
+            padding:15px 10px;
+            border-bottom:1px solid #444;
+            color:#fcfcfc;
+            text-transform:uppercase;
+            font-size:15px;
+          }
+          #sidebar-wrapper div.list button.item {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #444;
+            width: 100%;    
+          }
+          #sidebar-wrapper div.list button.item:hover{
+              font-style: italic;
+          }
+          #sidebar-wrapper div.list button.item.active{
+              font-size:18px;
+              font-weight: 900;
+          }
+          /*sidebar-wrapper-options*/
+          #sidebar-wrapper-options {
+            position:absolute;
+            top:10%;
+            left:-200px;
+            width:200px;
+            height:92%;
+            background:#999999;
+            transition:all 300ms linear;
+          }
+          #sidebar-wrapper-options.active {
+            left:0px;
+          }
+          #sidebar-wrapper-options .toggle-btn {
+            position:absolute;
+            left:265px;
+            top:10px;
+            transition: left 1s;
+          }
+          #sidebar-wrapper-options.active .toggle-btn {
+            left:220px;
+            transition: left 1s;
+          }
+          #sidebar-wrapper-options .toggle-btn p {
+              margin: 0;
+              padding: 0;
+              font-size: .9rem;
+              cursor: pointer;
+          }
+          #sidebar-wrapper-options .toggle-btn span {
+            display:block;
+            width:50px;
+            height:2px;
+            background:#999999;
+            margin:5px 0px;
+            cursor:pointer;
+          }
+          #sidebar-wrapper-options div.list div.item, button.item {
+            padding:15px 10px;
+            border-bottom:1px solid #444;
+            color:#fcfcfc;
+            text-transform:uppercase;
+            font-size:15px;
+          }
+          #sidebar-wrapper-options div.list button.item {
+            background-color: transparent;
+            border: none;
+            border-bottom: 1px solid #444;
+            width: 100%;    
+          }
+          #sidebar-wrapper-options div.list button.item:hover{
+            font-style: italic;
+          }
+          #sidebar-wrapper-options div.list button.item.active{
+              font-size:18px;
+              font-weight: 900;
+          }
+          .viewCounter {
+              border-radius: 50%;
+              width: 50px;
+              height: 30px;
+              /*padding: 8px;*/
+
+              background: #fff;
+              border: 2px solid #666!important;
+              color: #666;
+              text-align: center;
+
+              font: 17px Arial, sans-serif;
+          }
+          .mealsForThis{
+            border: 2px solid #518ce4!important;
+            color: #518ce4;
+          }
+          .mealsConfirmed{
+            border: 2px solid #39b66d!important;
+            color: #39b66d;
+          }
+          .mealsOnList{
+            border: 2px solid #403df1!important;
+            color: #403df1;
+          }
+
+    </style>
+    <!-- --------------------------------------------------------------------------------------- -->
+    <div class=".container-fluid mx-auto-my-auto text-center w-100" style="height:90%!important">
+        <!-- Modal -->
+        <div id="sidebar-wrapper" class="my-auto mx-auto text-center" style="height: 90%!important;">
+            <div id="toggleBtn" class="toggle-btn" onclick="appCtrl.toggleSidebar(this,uiCtrl)" style="display: block;">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>  
+            <div class="list h-100" style="overflow-y: auto;">
+                <div style="margin:.3px;border: white 0.5px solid;">
+                    <p style="color: white;margin: 0;padding: 0;"><i>Quick actions</i></p>
+                    <!-- <button id="genInvitationCodeStateBtn" class="appStateBtns  item">Generate invitation code</button> -->
+                    <button id="orderDeliveryStateBtn" class="appStateBtns  item">Order delivery</button>
+                </div>
+                <button id="usersStateBtn" class="appStateBtns  item">Users</button>
+                <!--<button id="menuStateBtn" class="appStateBtns  item">Menu</button>-->
+                <button id="cookingCalendarStateBtn" class="appStateBtns  item">Cooking calendar</button>
+                <button id="dishStateBtn" class="appStateBtns  item">Dish</button>
+                <button id="ordersStateBtn" class="appStateBtns  item">Orders</button>
+                <button id="catorStateBtn" class="appStateBtns  item">Catering</button>
+                <button id="reportsStateBtn" class="appStateBtns  item">Reports</button>
+                
+                <div style="margin:.3px;border: rgb(236, 71, 71) 0.5px solid;">
+                    <p style="color: white;margin: 0;padding: 0;"><i>System mangement</i></p>
+                    <button id="manageAccessStateBtn" class="appStateBtns  item">Manage access</button>
+                </div>
+                <button id="logoutStateBtn" class="appStateBtns  item">Log-out</button>
+            </div>
+        </div>
+        <style>
+            #main-content-breadCumber {
+                margin-top: 2px!important;
+                height: 6%!important;
+                margin-left: 130px!important;
+                font-size: .7rem;
+            }
+        </style>
+        <div id="main-content-spinner" class=".container-fluid w-100 h-100 mx-auto my-auto text-center" style="display:none;position: absolute;background-color: rgba(240, 240, 240, 0.7)">
+          <div class="row h-100 w-100">
+            <div class="col-12">
+              <img src="/img/spinner2.gif" alt="Spinner" height="75%">
+            </div>
+          </div>
+        </div>
+        <div id="main-content-breadCumber" class=".container-fluid mx-auto my-auto text-right" style="height:6%!important"></div>
+        <div id="main-content-wrapper" class=".container-fluid w-100 mx-auto my-auto text-center" style="height: 94%!important;">
+
+        </div>
+    </div>
+    
+<!-- MAIN CONTENT UNTILL HERE -->
+    <%- include('headerFooter/login/loginFooter.ejs') %>
+</body>
+<!-- SCRIPT FILES START HERE -->
+    <script> const socketIoDNS = "https://apifoodtruck.dgmieth.live"; </script>
+    <script src="https://apifoodtruck.dgmieth.live/socket.io/socket.io.js"></script>
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="/js/bootstrap/jquery.min.js"></script>
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <!-- SOCKET IO -->
+    <!-- FLATPKR SCRIPTS -->
+    <script src="/js/flatpkr/flatpkir.js"></script>
+    <script src="/flatpickr/dist/plugins/confirmDate/confirmDate.js"></script>
+    <!-- CUSTOM SCRIPTS -->
+    <script src="/js/admPages/dashboard/appCtrl.js"></script>
+    <script src="/js/admPages/dashboard/dataCtrl.js"></script>
+    <script src="/js/admPages/dashboard/uiCtrl.js"></script>
+    <script src="/js/admPages/dashboard/main.js"></script>
+<!-- SCRIPT FILES END HERE -->
+
+<%- include('_metadata/end.ejs') %>

@@ -1,0 +1,97 @@
+version: '3'
+services:
+    ##====================================================================================##
+    ###DEPLOY SINGLE APPLICATION IN COMBO
+    ##====================================================================================##
+    system_kungfubbq:
+        image: dgmieth/foodtruckProject_23032022
+        ports: 
+            - "8070:8070"
+            - "8068:8068"
+        networks:
+          - foodtruckProject
+        deploy:
+            replicas: 1
+            restart_policy:
+                condition: on-failure
+            resources:
+                limits:
+                    memory: 300M
+    ##====================================================================================##
+    ###DEPLOYS APPLICATIONS SEPARATELY
+    ##====================================================================================##
+    # redis:
+    #     image: redis:latest
+    #     container_name: redis
+    #     ports:
+    #         - 6379:6379
+    #     volumes:
+    #         - ./redis-docker/config/redis.conf:/redis.conf
+    #     command: [ "redis-server", "/redis.conf" ]
+    #     networks:
+    #         - kungfuBBQNetwork
+    #     deploy:
+    #         replicas: 1
+    #         restart_policy:
+    #             condition: on-failure
+    # administrative:
+    # #     UNCOMENT TO USER WITH DOCKER COMPOSE UP
+    # #     build: 
+    # #         dockerfile: ./kungfuBBQ_administrative/dockerfile
+    # #         context: .
+    # #     container_name: kungfuAp
+    # #    mem_limit: 256M
+    #     image: dgmieth/kungfubbqadministrative
+    #     networks:
+    #         - kungfuBBQNetwork
+    #     ports:
+    #        - "8080:8080"
+    # #     #### COMMENT DEPLOY INFORMATION to use with SWARM
+    #     deploy:
+    #         replicas: 1
+    #         restart_policy:
+    #             condition: on-failure
+    #         resources:
+    #             limits:
+    #                 memory: 256M
+    # restapi:
+    # ###UNCOMENT commented lines TO USER WITH DOCKER COMPOSE UP
+    # #     build: ./kungfuBBQ_REST/dockerfile
+    # #         dockerfile: ./kungfuBBQ_REST/dockerfile
+    # #         context: .
+    # #     container_name: restApi
+    # #     mem_limit: 256M
+    #     image: dgmieth/kungfubbqrest
+    #     networks:
+    #         - kungfuBBQNetwork
+    #     ports:
+    #       - 8082:8082
+    # ###COMMENT DEPLOY INFORMATION to use with SWARM
+    #     deploy:
+    #         replicas: 2
+    #         restart_policy:
+    #             condition: on-failure
+    #         resources:
+    #             limits:
+    #                 memory: 256M
+    # visualizer:
+    #    image: dockersamples/visualizer:stable
+    #    ports: 
+    #       - "4000:8080"
+    #    stop_grace_period: 1m30s
+    #    volumes:
+    #       - "/var/run/docker.sock:/var/run/docker.sock"
+    #    networks:
+    #       - kungfuBBQNetwork
+    #    deploy:
+    #        resources:
+    #            limits:
+    #                memory: 50M
+networks:
+    kungfuBBQNetwork:
+        external:
+            name: foodtruckProject
+       
+
+
+    

@@ -1,0 +1,55 @@
+<%- include('_metadata/beg.ejs', pageTitle) %>
+<!-- CSS FILES START HERE -->
+    <!-- BOOTSTRAP CSS -->
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+<style>
+    html,body {
+        height: 100%!important;
+    }
+</style>
+<!-- CSS FILES END HERE -->
+</head>
+<body> 
+    <%- include('headerFooter/login/loginHeader.ejs') %>
+    <!-- MAIN CONTENT FROM HERE -->
+    <div class=".container-fluid mx-auto-my-auto text-center w-100" style="height:92%!important">
+        <div class="row h-100 my-auto mx-auto" style="width: 90%!important;">
+            <div class="col-12 align-self-center my-auto mx-auto">
+                <div class="card text-center">
+                    <div class="card-header">
+                        What do you want to do? 
+                    </div>
+                    <div class="card-body">
+                      <h5 class="card-title">Administrative System</h5>
+                      <p class="card-text">Manage users, cooking dates, locations, menus... Visualize reports..</p>
+                      <a id="loginAdmin" href="/login/admLogin" class="btn btn-primary">Log-in</a>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Software developer </h5>
+                        <p class="card-text">Keep track of starting and ending of development times.</p>
+                        <a id="loginDeveloper" href="/login/developerLogin" class="btn btn-primary">Log-in</a>
+                      </div>
+                    <div class="card-footer text-muted">
+                      KungfuBBQ &copysr; 2021
+                    </div>
+                  </div>
+
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- MAIN CONTENT UNTILL HERE -->
+    <%- include('headerFooter/login/loginFooter.ejs') %>
+</body>
+<!-- SCRIPT FILES START HERE -->
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="/js/bootstrap/bootstrap.bundle.js"></script>
+    <script>
+        document.getElementById('loginDeveloper').addEventListener('click',(e)=>{
+            
+        })
+    </script>
+<!-- SCRIPT FILES END HERE -->
+
+<%- include('_metadata/end.ejs') %>

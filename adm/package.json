@@ -1,0 +1,33 @@
+{
+  "name": "kungfubbq_adminwebapp",
+  "version": "1.0.0",
+  "description": "web app for configuring all information in the system",
+  "main": "app/app.js",
+  "scripts": {
+    "test": "jest",
+    "start": "NODE_ENV=prod node app/app.js",
+    "devMode": "NODE_ENV=dev node app/app.js",
+    "startApp": "nodemon -e \"css,js,ejs,env,json\" app/app.js",
+    "debugMode": "nodemon --inspect -e \"css,js,ejs,env,json\" app/app.js"
+  },
+  "keywords": [
+    "kungfuBBQ"
+  ],
+  "author": "Diego Rafael Mieth",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.4",
+    "bcrypt": "^5.0.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^10.0.0",
+    "ejs": "^3.1.6",
+    "express": "^4.17.1",
+    "express-mysql-session": "^2.1.6",
+    "express-session": "^1.17.2",
+    "flatpickr": "^4.6.9",
+    "jest": "^27.5.1",
+    "mysql2": "^2.2.5",
+    "node-cron": "^3.0.0",
+    "sinon": "^13.0.1"
+  }
+}

@@ -1,0 +1,97 @@
+<%- include('_metadata/beg.ejs', {pageTitle}) %>
+<!-- CSS FILES START HERE -->
+    <!-- BOOTSTRAP CSS -->
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+<style>
+    html,body {
+        height: 100%!important;
+    }
+</style>
+<!-- CSS FILES END HERE -->
+</head>
+<body> 
+    <%- include('headerFooter/login/loginHeader.ejs') %>
+    <!-- MAIN CONTENT FROM HERE -->
+    <div class=".container-fluid mx-auto my-auto text-center w-75" style="height:92%!important;overflow-y: auto;" >
+        <div id="alert" class="alert alert-dismissible fade" style="position: absolute;right: 0;top:0;margin-top: 6px;width: 70%;" role="alert">
+            <div id="text" class="w-100 mx-auto my-auto text-center">
+
+            </div>
+        </div>
+        <div class="row w-100 h-100 my-auto mx-auto">
+            <div class="col-12 align-self-center my-auto mx-auto">
+                <div class="card text-center">
+                    <div class="form">
+                        <div class=".container-fluid w-100" style="height: 15px!important;"></div>
+                        <div class=".container-fluid w-100" style="height: 15px!important;"></div>
+                        <div class=".container-fluid mx-auto my-auto w-75">
+                            <input id="email" name="email" placeholder="E-mail" type="email" class="w-100">
+                        </div>
+                        <div class=".container-fluid w-100" style="height: 15px!important;"></div>
+                        <div class=".container-fluid mx-auto my-auto w-75">
+                            <input id="password" n placeholder="Password" name="password" class="w-100" type="password" maxlength="8" required>
+                        </div>
+                        <div class=".container-fluid w-100" style="height: 15px!important;"></div>
+                        <div class=".container-fluid w-100" style="height: 15px!important;"></div>
+                        <button id="submit-btn" type="btn" class="btn btn-primary">Log-in</button>
+                        <a href="/" class="btn btn-danger">Cancelar</a>
+                        <div class=".container-fluid w-100" style="height: 15px!important;"></div>
+                        <div class=".container-fluid w-100" style="height: 15px!important;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- MAIN CONTENT UNTILL HERE -->
+    <%- include('headerFooter/login/loginFooter.ejs') %>
+</body>
+<!-- SCRIPT FILES START HERE -->
+    <!-- BOOTSTRAP SCRIPTS -->
+    <script src="/js/bootstrap/jquery.min.js"></script>
+    <script src="/js/bootstrap/popper.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <!-- CUSTOM SCRIPTS -->
+    <script>
+        function showAlert(alertClass,text){
+            console.log(alertClass,text)
+            document.getElementById('text').innerHTML = `${text}`
+            document.getElementById('alert').classList.add(alertClass, 'show')
+        }
+        document.getElementById('submit-btn').addEventListener('click',(e)=> {
+                if(document.getElementById('email').value===''||document.getElementsByName('email')[0].value==null){
+                    console.log(123)
+                    showAlert(`alert-warning`,`Please informa a valid e-mail`)
+                }else if (document.getElementById('password').value === ''||document.getElementById('password').value==null){
+                    showAlert(`alert-warning`,`Please inform you password`)
+                }else {
+                    fetch('/auth/loginDeveloper', {
+                        method: 'POST',
+                        redirect: 'follow',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            email: document.getElementById('email').value,
+                            password: document.getElementById('password').value
+                        })
+                    })
+                    .then(answer => { return answer.json() })
+                    .then(response => {
+                        console.log(response)
+                        if(typeof response.redirect=='string'){
+                            window.location.href = response.redirect
+                        }else if(response.error){
+                            showAlert(`alert-danger`,`${response.error}`)
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        showAlert(`alert-danger`,`Request couldnt reach the server.`)
+                    })
+            }
+        })
+    </script>
+<!-- SCRIPT FILES END HERE -->
+
+<%- include('_metadata/end.ejs') %>
