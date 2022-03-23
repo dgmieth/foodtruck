@@ -4,8 +4,8 @@ var ApiContracts = require('authorizenet').APIContracts;
 var ApiControllers = require('authorizenet').APIControllers;
 var SDKConstants = require('authorizenet').Constants;
 //var utils = require('../utils.js');
-const APIKEY = process.env.NODE_ENV==='prod' ?  process.env.API_LOGIN_KEY_PROD : process.env.API_LOGIN_KEY_DEV
-const TRANSACTIONKEY = process.env.NODE_ENV==='prod' ? process.env.TRASACTION_KEY_PROD : process.env.TRASACTION_KEY_DEV
+const APIKEY =  process.env.API_LOGIN_KEY_DEV
+const TRANSACTIONKEY = process.env.TRASACTION_KEY_DEV
 const itemCounter = 30
 console.log(process.env.NODE_ENV)
 console.log(APIKEY)
@@ -86,10 +86,10 @@ exports.chargeCreditCard = (dataObject, callback) => {
     console.log(JSON.stringify(createRequest.getJSON(), null, 2));
             
     var ctrl = new ApiControllers.CreateTransactionController(createRequest.getJSON());
-    if(process.env.NODE_ENV==='prod'){
-        console.log('live account')
-        ctrl.setEnvironment(SDKConstants.endpoint.production);
-    }
+    // if(process.env.NODE_ENV==='prod'){
+    //     console.log('live account')
+    //     ctrl.setEnvironment(SDKConstants.endpoint.production);
+    // }
     ctrl.execute(function(){
         console.log(456)
 
