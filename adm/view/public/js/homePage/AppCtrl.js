@@ -58,6 +58,7 @@ class AppCtrl {
         if(validate>=1){
             uiCtrl.showHideAlert('alert-danger','Vc dever informar o email e a senha','show')
         }else{
+            // console.log(socketIoDNS)
             uiCtrl.showHideSpinner('show')
             fetch(`${socketIoDNS}/login/login`,{
                 method: 'POST',
@@ -583,7 +584,7 @@ class AppCtrl {
         window.OneSignal.push(function () {
             // console.log('insideiniti')
             OneSignal.init({
-                appId: "446792d9-94c1-4a16-b05d-aa79ff8b57e2"
+                appId: "79ad3887-14fe-49b9-81c3-5f4ca6a1df3b"
                 // Your other init settings
             });
         });

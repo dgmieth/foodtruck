@@ -449,8 +449,10 @@ class UICtrl {
         if(appCtrl.getSecondLevelType===appCtrl.getSecondLevelModalTypes.pedidos){
             console.log('secondLevelCalled')
             var btn = ''
+            var isUpdatable = false
             if(dataCtrl.fetchData('hasOrderInEvent')){
                 if(dataCtrl.fetchData('updatableStatusId').includes(dataCtrl.fetchData('eventStatus').id)){
+                    isUpdatable = true
                     btn = `
                     <button type="button" class="btn btn-warning"
                     onclick="appCtrl.updateOrder('${this.forms.pedidos}',dataCtrl,uiCtrl)"
@@ -478,6 +480,7 @@ class UICtrl {
                 }
             }else{
                 if(dataCtrl.fetchData('orderableStatusId').includes(dataCtrl.fetchData('eventStatus').id)){
+                    isUpdatable = true
                     btn = `
                         <button type="button" class="btn btn-primary" 
                             onclick="appCtrl.placeOrder('${this.forms.pedidos}',dataCtrl,uiCtrl)"
@@ -539,7 +542,7 @@ class UICtrl {
                                 document.getElementById('${this.elementIds.precoTotal}').innerText = 'R$ 0.00'    
                             }else{
                                 document.getElementById('${this.elementIds.precoTotal}').innerText = 'R$ ' + parseFloat(dataCtrl.fetchData('totalAmount')*parseFloat(document.getElementById('${this.elementIds.qtdeDePedidos}').value)).toFixed(2)
-                            }">
+                            }" ${isUpdatable ? '' : 'disabled'}>
                         <div class="col-12 col-md-4  textAlign"><strong>Preco da refeicao:</strong></div>
                         <div id="${this.elementIds.precoUnitario}" class="col-12 col-md-8  textAlign">R$${parseFloat(dataCtrl.fetchData('totalAmount')).toFixed(2)}</div>
                         <div class="col-12 col-md-4  textAlign"><strong>Valor total:</strong></div>
