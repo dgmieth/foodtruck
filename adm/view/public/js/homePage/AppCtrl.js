@@ -58,7 +58,7 @@ class AppCtrl {
         if(validate>=1){
             uiCtrl.showHideAlert('alert-danger','Vc dever informar o email e a senha','show')
         }else{
-            // console.log(socketIoDNS)
+            console.log(socketIoDNS)
             uiCtrl.showHideSpinner('show')
             fetch(`${socketIoDNS}/login/login`,{
                 method: 'POST',
@@ -149,7 +149,8 @@ class AppCtrl {
                     dataObj.name = el.value
                     break;
                 case 'celular2':
-                    dataObj.phoneNumber = el.value
+                    if(el.value.length<15){ validate += 1}
+                    dataObj.phoneNumber = el.value.replace(/\D/ig,'')
                     break;
                 case 'password2':
                     dataObj.password = el.value
@@ -199,6 +200,132 @@ class AppCtrl {
                 console.log(err)
                 uiCtrl.showHideAlert('alert-danger',err)
             })
+        }
+    }
+    updateUserInfo(info,dataCtrl,uiCtrl){
+        // console.log(info)
+        var obj = {}
+        var validate = 0
+        const token = dataCtrl.fetchData('user').token
+        for(let el of document.getElementsByName(info)){
+            switch (el.id) {
+                case "field02":
+                    if(el.value.length===0){     validate += 1
+                    }else{ obj.name = el.value    }
+                    break;
+                case "field03":
+                    if(el.value.length<15){validate += 1
+                    }else{    obj.phoneNumber = el.value.replace(/\D/ig,'')   }
+                    break;
+                case "field04":
+                    if(el.value.length===0){    obj.facebookName = 'none'
+                    }else{    obj.facebookName = el.value  }
+                    break;
+                case "field05":
+                    if(el.value.length===0){    obj.instagramName = 'none'
+                    }else{    obj.instagramName = el.value }
+                    break;
+                default:
+                    break;
+            }
+        }
+        if(validate>0){
+            uiCtrl.showHideAlert('alert-warning',"Voce precisa informa seu nome e um numero de celular valido",'show')
+        }else{
+            uiCtrl.showHideSpinner('show')
+            obj.email = dataCtrl.fetchData('user').email
+            obj.id = dataCtrl.fetchData('user').id
+            console.log(obj)
+        fetch(`${socketIoDNS}/api/user/updateInfo`,{
+            method: 'POST',
+            headers: {
+                'Authorization':`Bearer ${token}`,
+                'Content-Type':'Application/json',
+                'Access-Control-Request-Method': 'POST',
+                'Access-Control-Request-Headers':'Content-Type'
+            },
+            body: JSON.stringify(obj)})
+        .then((answer)=>{return answer.json()})
+        .then((response)=>{
+            console.log(response)
+            uiCtrl.showHideSpinner('hide')
+            if(response.hasErrors){
+                if(response.errorCode===4){
+                    return uiCtrl.showHideAlert('alert-warning',response.msg,'show')    
+                }
+                uiCtrl.showHideAlert('alert-danger',response.msg,'show')
+            }else{
+                uiCtrl.showHideAlert('alert-success','Informacoes do usuario atualizadas!','show')
+                dataCtrl.setUser = response.data
+                uiCtrl.showSecondLevelModal('hide')
+                uiCtrl.showModal('hide')
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            uiCtrl.showHideAlert('alert-danger',err)
+        })
+        }
+    }
+    updatePassword(info,dataCtrl,uiCtrl){
+        console.log(info)
+        var obj = {}
+        var validate = 0
+        const token = dataCtrl.fetchData('user').token
+        for(let el of document.getElementsByName(info)){
+            switch (el.id) {
+                case "field11":
+                    if(el.value.length<3 && el.value.length>20){     validate += 1
+                    }else{ obj.currentPassword = el.value    }
+                    break;
+                case "field12":
+                    if(el.value.length<3 && el.value.length>20){     validate += 1
+                    }else{    obj.newPassword = el.value   }
+                    break;
+                case "field13":
+                    if(el.value.length<3 && el.value.length>20){     validate += 1
+                    }else{    obj.confirmPassword = el.value  }
+                    break;
+                default:
+                    break;
+            }
+        }
+        if(obj.confirmPassword!==obj.newPassword){ console.log('validou'); validate += 1 } 
+        if(validate>0){
+            uiCtrl.showHideAlert('alert-warning',"Voce precisa informar sua senha atual, escolher uma nova senha de 3 a 20 caracteres que deve conter pelo menos uma letra minuscula, uma letra maiuscula e um numero e confirmar esta nova senha",'show')
+        }else{
+            uiCtrl.showHideSpinner('show')
+            obj.email = dataCtrl.fetchData('user').email
+            obj.id = dataCtrl.fetchData('user').id
+            console.log(obj)
+        fetch(`${socketIoDNS}/api/user/changePassword`,{
+            method: 'POST',
+            headers: {
+                'Authorization':`Bearer ${token}`,
+                'Content-Type':'Application/json',
+                'Access-Control-Request-Method': 'POST',
+                'Access-Control-Request-Headers':'Content-Type'
+            },
+            body: JSON.stringify(obj)})
+        .then((answer)=>{return answer.json()})
+        .then((response)=>{
+            console.log(response)
+            uiCtrl.showHideSpinner('hide')
+            if(response.hasErrors){
+                if(response.errorCode===4){
+                    return uiCtrl.showHideAlert('alert-warning',response.msg,'show')    
+                }
+                uiCtrl.showHideAlert('alert-danger',response.msg,'show')
+            }else{
+                uiCtrl.showHideAlert('alert-success',response.msg,'show')
+                uiCtrl.showSecondLevelModal('hide')
+                uiCtrl.showModal('hide')
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            uiCtrl.showHideAlert('alert-danger',err)
+        })
         }
     }
     fetchEventsAndOrders(dataCtrl,uiCtrl){
@@ -477,6 +604,72 @@ class AppCtrl {
         })
         }
     }
+    cateringMessage(info,dataCtrl,uiCtrl){
+        console.log(info)
+        //email name  phoneNumber orderDescription
+        var obj = {}
+        var validate = 0
+        for(let el of document.getElementsByName(info)){
+            switch (el.id) {
+                case "field01":
+                    if(el.value.length===0){     validate += 1
+                    }else{ obj.email = el.value    }
+                    break;
+                case "field02":
+                    if(el.value.length===0){validate += 1
+                    }else{    obj.name = el.value    }
+                    break;
+                case "field03":
+                    if(el.value.length<15){validate += 1
+                    }else{    obj.phoneNumber = el.value.replace(/\D/ig,'')   }
+                    break;
+                case "field04":
+                    if(el.value.length===0){validate += 1
+                    }else{    obj.orderDescription = el.value }
+                    break;
+                default:
+                    break;
+            }
+        }
+        if(validate>0){
+            uiCtrl.showHideAlert('alert-warning',"Voce deve informar seu e-mail, seu nome, um numero de celular valido e a descricao da necessidade do seu evento",'show')
+        }else{
+            uiCtrl.showHideSpinner('show')
+            console.log(obj)
+        fetch(`${socketIoDNS}/api/catoring/saveContact`,{
+            method: 'POST',
+            headers: {
+                'Content-Type':'Application/json',
+                'Access-Control-Request-Method': 'POST',
+                'Access-Control-Request-Headers':'Content-Type'
+            },
+            body: JSON.stringify(obj)})
+        .then((answer)=>{return answer.json()})
+        .then((response)=>{
+            console.log(response)
+            uiCtrl.showHideSpinner('hide')
+            if(response.hasErrors){
+                if(response.errorCode===4){
+                    return uiCtrl.showHideAlert('alert-warning',response.msg,'show')    
+                }
+                uiCtrl.showHideAlert('alert-danger',response.msg,'show')
+            }else{
+                uiCtrl.showHideAlert('alert-success',response.msg,'show')
+                uiCtrl.showSecondLevelModal('hide')
+                uiCtrl.showModal('hide')
+            }
+        })
+        .catch(err => {
+            console.log(err)
+            uiCtrl.showHideAlert('alert-danger',err)
+        })
+        }
+    }
+    logOut(dataCtrl,uiCtrl){
+        dataCtrl.isUserLogged(false,uiCtrl)
+        uiCtrl.showModal('hide')
+        uiCtrl.showSecondLevelModal('hide')
+    }
     /*========================================================================================
     ========================================================================================
     ========================================================================================
@@ -584,7 +777,7 @@ class AppCtrl {
         window.OneSignal.push(function () {
             // console.log('insideiniti')
             OneSignal.init({
-                appId: "79ad3887-14fe-49b9-81c3-5f4ca6a1df3b"
+                appId: "446792d9-94c1-4a16-b05d-aa79ff8b57e2"
                 // Your other init settings
             });
         });

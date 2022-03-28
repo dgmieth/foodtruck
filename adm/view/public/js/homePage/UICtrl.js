@@ -39,7 +39,7 @@ class UICtrl {
         }
         this.buttons = {
             classes: {
-                personaData: 'btnPersonalData'
+                btnPersonalData: 'btnPersonalData'
             }
         }
     }
@@ -112,32 +112,35 @@ class UICtrl {
                     <div class=".container-fluid mx-auto my-auto w-75">
                         <label class="w-100">
                             E-mail:
-                            <input id="email" name="${this.forms.catering}" placeholder="fulano@mail.com" type="email" class="w-75" autocomplete="off" required>
+                            <input id="field01" name="${this.forms.catering}" placeholder="fulano@mail.com" type="email" class="w-75" autocomplete="off" required>
                         </label>
                     </div>
                     <div class=".container-fluid w-100" style="height: 15px!important;"></div>
                     <div class=".container-fluid mx-auto my-auto w-75">
                         <label class="w-100">
                             Nome:
-                            <input id="name" name="${this.forms.catering}" placeholder="Fulado de tal" type="text" class="w-75" autocomplete="off" required>
+                            <input id="field02" name="${this.forms.catering}" placeholder="Fulado de tal" type="text" class="w-75" autocomplete="off" required>
                         </label>
                     </div>
                     <div class=".container-fluid w-100" style="height: 15px!important;"></div>
                     <div class=".container-fluid mx-auto my-auto w-75">
                         <label class="w-100">
                             Celuar:
-                            <input id="celular" name="${this.forms.catering}" placeholder="(00) 00000-0000" oninput="this.value = phoneNumberMask(this.value)" type="text" class="w-75" autocomplete="off" maxlength="11" required>
+                            <input id="field03" name="${this.forms.catering}" placeholder="(00) 00000-0000" oninput="this.value = phoneNumberMask(this.value)" type="text" class="w-75" autocomplete="off" maxlength="11" required>
                         </label>
                     </div>
                     <div class=".container-fluid w-100" style="height: 15px!important;"></div>
                     <div class=".container-fluid mx-auto my-auto w-75">
-                        <textarea id="email" name="${this.forms.catering}" placeholder="Descreva o evento" class="w-100" autocomplete="off" required></textarea>
+                        <textarea class="w-75" id="field04" name="${this.forms.catering}" placeholder="Descreva o evento" class="w-100" autocomplete="off" required></textarea>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Enviar mensagem</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="
+                    appCtrl.cateringMessage('${this.forms.catering}',dataCtrl,uiCtrl)
+                    ">Enviar mensagem</button>
             </div>
             `
         }
@@ -177,44 +180,51 @@ class UICtrl {
                     <div class=".container-fluid mx-auto my-auto w-75">
                         <label class="w-100">
                             E-mail:
-                            <div id="email" name="${this.forms.personalData}" class="w-75">fulano@mail.com</div>
+                            <div id="field01" class="w-75">${dataCtrl.fetchData('user').email}</div>
                         </label>
                     </div>
                     <div class=".container-fluid w-100" style="height: 15px!important;"></div>
                     <div class=".container-fluid mx-auto my-auto w-75">
                         <label class="w-100">
                             Nome:
-                            <input id="name" name="${this.forms.personalData}" placeholder="Fulado de Tal" value="Fulado de Tal" type="text" class="w-75" autocomplete="off" required disabled>
+                            <input id="field02" name="${this.forms.personalData}" value="${dataCtrl.fetchData('user').name}" type="text" class="w-75" autocomplete="off" required disabled>
                         </label>
                     </div>
                     <div class=".container-fluid w-100" style="height: 15px!important;"></div>
                     <div class=".container-fluid mx-auto my-auto w-75">
                         <label class="w-100">
                             Celular:
-                            <input id="celular" name="${this.forms.personalData}" placeholder="(00) 00000-0000" value="${phoneNumberMask('00000000000')}" oninput="this.value = phoneNumberMask(this.value)" type="text" class="w-75" autocomplete="off" maxlength="11" required disabled>
+                            <input id="field03" name="${this.forms.personalData}" placeholder="(00) 00000-0000" value="${phoneNumberMask(dataCtrl.fetchData('user').phoneNumber)}" oninput="this.value = phoneNumberMask(this.value)" type="text" class="w-75" autocomplete="off" maxlength="11" required disabled>
                         </label>
                     </div>
                     <div class=".container-fluid w-100" style="height: 15px!important;"></div>
                     <div class=".container-fluid mx-auto my-auto w-75">
                         <label class="w-100">
                             Usuario facebook:
-                            <input id="facebookUser" name="${this.forms.personalData}" placeholder="Nome usuario facebook" value="Fulado de Tal" type="text" class="w-75" autocomplete="off" disabled>
+                            <input id="field04" name="${this.forms.personalData}" placeholder="Nome usuario facebook" value="${dataCtrl.fetchData('user').socialMediaInfo[0].socialMediaName}" type="text" class="w-75" autocomplete="off" disabled>
                         </label>
                     </div>
                     <div class=".container-fluid w-100" style="height: 15px!important;"></div>
                     <div class=".container-fluid mx-auto my-auto w-75">
                         <label class="w-100">
                             Usuario instagram:
-                            <input id="name" name="${this.forms.personalData}" placeholder="Nome usuario instagram" value="Fulado de Tal" type="text" class="w-75" autocomplete="off" disabled>
+                            <input id="field05" name="${this.forms.personalData}" placeholder="Nome usuario instagram" value="${dataCtrl.fetchData('user').socialMediaInfo[1].socialMediaName}" type="text" class="w-75" autocomplete="off" disabled>
                         </label>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button id="editSenha" type="button" class="btn btn-danger ${this.buttons.classes.personaData}" onclick="appCtrl.setSecondLevelModalType=appCtrl.getSecondLevelModalTypes.senha;uiCtrl.showHideSecondLevelModals(appCtrl,dataCtrl)" >Alterar senha</button>
-                <button id="editInfo" type="button" class="btn btn-warning ${this.buttons.classes.personaData}" onclick="appCtrl.enableDisableInputs('${this.forms.personalData}',false);appCtrl.showHideButtons('${this.buttons.classes.personaData}')">Editar</button>
-                <button type="button" class="btn btn-secondary ${this.buttons.classes.personaData}" data-dismiss="modal" hidden>Fechar</button>
-                <button type="button" class="btn btn-primary ${this.buttons.classes.personaData}" hidden>Salvar</button>
+                <button type="button" class="btn btn-dark ${this.buttons.classes.btnPersonalData}" 
+                    onclick="
+                        appCtrl.logOut(dataCtrl,uiCtrl)
+                    ">Log-out</button>
+                <button id="editSenha" type="button" class="btn btn-danger ${this.buttons.classes.btnPersonalData}" onclick="appCtrl.setSecondLevelModalType=appCtrl.getSecondLevelModalTypes.senha;uiCtrl.showHideSecondLevelModals(appCtrl,dataCtrl)" >Alterar senha</button>
+                <button id="editInfo" type="button" class="btn btn-warning ${this.buttons.classes.btnPersonalData}" onclick="appCtrl.enableDisableInputs('${this.forms.personalData}',false);appCtrl.showHideButtons('${this.buttons.classes.btnPersonalData}')">Editar</button>
+                <button type="button" class="btn btn-secondary ${this.buttons.classes.btnPersonalData}" data-dismiss="modal" hidden>Fechar</button>
+                <button type="button" class="btn btn-primary ${this.buttons.classes.btnPersonalData}" hidden
+                    onclick="
+                    appCtrl.updateUserInfo('${this.forms.personalData}',dataCtrl,uiCtrl)
+                    ">Salvar</button>
             </div>
             `
         }
@@ -313,6 +323,15 @@ class UICtrl {
         }
         if(appCtrl.getSecondLevelType===appCtrl.getSecondLevelModalTypes.senha){
             document.getElementById(this.modals.secondLevelModalContent).innerHTML = `
+            <style>
+                .inputGroups{
+                    margin: 5px auto!important;
+                }
+                .inputs{
+                    height: 65%!important;
+                    width: 50%;
+                }
+            </style>
             <div class="modal-header">
                 <h5 class="modal-title" id="TituloModalCentralizado">Alteracao de senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
@@ -320,29 +339,33 @@ class UICtrl {
                 </button>
             </div>
             <div class=".container-fluid w-100" style="height: 15px!important;"></div>
-            <div class=".container-fluid mx-auto my-auto w-75">
+            <div class=".container-fluid mx-auto my-auto w-75 inputGroups">
                 <label class="w-100">
                     Senha atual:
-                    <input id="passwordAtual2" n placeholder="Sua senha de 8 digitos" name=""${this.forms.senha}" style="height:65%!important" type="password" autocomplete="off" maxlength="8" required>
+                    <input id="field11" class="inputs" placeholder="Sua senha de 3-20 digitos" name="${this.forms.senha}" style="height:65%!important" type="password" autocomplete="off" maxlength="20" required>
                 </label>
             </div>
             <div class=".container-fluid w-100" style="height: 15px!important;"></div>
             <br>
-            <div class=".container-fluid mx-auto my-auto w-75">
+            <div class=".container-fluid mx-auto my-auto w-75 inputGroups">
                 <label class="w-100">
                     Senha:
-                    <input id="passwordNew2" n placeholder="Sua senha de 8 digitos" name=""${this.forms.senha}" style="height:65%!important" type="password" autocomplete="off" maxlength="8" required>
+                    <input id="field12" class="inputs" placeholder="Sua senha de 3-20 digitos" name="${this.forms.senha}" style="height:65%!important" type="password" autocomplete="off" maxlength="20" required>
                 </label>
             </div>
-            <div class=".container-fluid mx-auto my-auto w-75">
+            <div class=".container-fluid mx-auto my-auto w-75 inputGroups">
                 <label class="w-100">
                     Confirmacao da senha:
-                    <input id="passwordNewConfirmatioin2" n placeholder="Sua senha de 8 digitos" name=""${this.forms.senha}" style="height:65%!important" type="password" autocomplete="off" maxlength="8" required>
+                    <input id="field13" class="inputs" placeholder="Sua senha de 3-20 digitos" name="${this.forms.senha}" style="height:65%!important" type="password" autocomplete="off" maxlength="20" required>
                 </label>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary">Alterar senha</button>
+                <button type="button" class="btn btn-primary"
+                    onclick="
+                    appCtrl.updatePassword('${this.forms.senha}',dataCtrl,uiCtrl)
+                    "
+                    >Alterar senha</button>
             </div>
             `
         }
@@ -651,7 +674,7 @@ class UICtrl {
     ========================================================================================*/
     updateHomePageButtons(userLogged){
         document.getElementById('clientArea').hidden = userLogged
-        // document.getElementById('userInfo').hidden = !userLogged
+        document.getElementById('userInfo').hidden = !userLogged
         document.getElementById('events').hidden = !userLogged
         
     }

@@ -3180,14 +3180,14 @@ function returnOrderStatusIcon(order){
 //masks phone number
 function phoneNumberMask(phoneNumber){
     // console.log('numbers->',phoneNumber)
-    if(phoneNumber===null||phoneNumber===''||phoneNumber===undefined){
-        console.log('phoneNumbne -> ',phoneNumber)
+    if(phoneNumber===null||phoneNumber===''){
+        //console.log('phoneNumbne -> ',phoneNumber)
         return phoneNumber
     }
     var numbers = phoneNumber.replace(/\D/ig,'')
-    // console.log('numbers->',numbers)
-    if(numbers.length===10){
-        return `(${numbers.substr(0,3)}) ${numbers.substr(3,3)}-${numbers.substr(6,4)}`
+    //console.log('numbers->',numbers)
+    if(numbers.length===11){
+        return `(${numbers.substr(0,2)}) ${numbers.substr(2,5)}-${numbers.substr(7,4)}`
     }
     return numbers
 }
