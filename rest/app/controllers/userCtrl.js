@@ -137,7 +137,7 @@ exports.resetPasswordPost = (req,res,next) => {
 }
 //UPDATE INFO==============================================================
 exports.updateInfo = (req,res,next) => {
-    console.log(req.headers)
+    // console.log(req.headers)
     //check if body contains all necessary information
     if(!req.body.id||!req.body.email||!req.body.name||!req.body.phoneNumber||!req.body.facebookName||!req.body.instagramName){
         return res.json(returnResJsonObj.resJsonOjbect(true,`{invalidFormat: true,neededFields: {id: 'string',email: 'string',name: 'string for null send none',phoneNumber: 'int for null send 999',facebookName: 'string for null send none',instagramName: 'string for null send none',}}`,userError))
@@ -208,19 +208,19 @@ exports.changePassword = (req,res,next) => {
     }
     if(!passwordValidation.checkCurrentPasswordAndNewPasswordEquality(req.body.currentPassword,req.body.newPassword)){
         validationObject.hasErrors = true
-        validationObject.msg = validationObject.msg + "Current password and new password are the same. "
+        validationObject.msg = validationObject.msg + "Nova senha nao pode ser igual a senha atual. "
     }
     if(!passwordValidation.checkPasswordAndPasswordConfirmationEquality(req.body.newPassword,req.body.confirmPassword)){
         validationObject.hasErrors = true
-        validationObject.msg = validationObject.msg + 'New password and new password confirmation are not equal. '
+        validationObject.msg = validationObject.msg + 'Nova senha e confirmacao da nova senha devem ser iguais. '
     }
     if(!passwordValidation.validatePasswords(req.body.newPassword,req.body.confirmPassword)){
         validationObject.hasErrors = true
-        validationObject.msg = validationObject.msg + 'Password must at least one UPPER case and one lower case letter and one number. '
+        validationObject.msg = validationObject.msg + 'A senha deve ter entre 3 e 20 caracteres e conter no minimo uma letra minuscula, uma letra maiuscula e um numero. '
     }
     if(!passwordValidation.checkPasswordAndPasswordConfirmationLength(req.body.newPassword,req.body.confirmPassword)){
         validationObject.hasErrors = true
-        validationObject.msg = validationObject.msg + 'Password must be 3 to 20 characters long. '   }
+        validationObject.msg = validationObject.msg + 'Senha deve ter entre 3 e 20 caracteres. '   }
     if(validationObject.hasErrors){
         return res.json(returnResJsonObj.resJsonOjbect(true,validationObject.msg,userError))   
     }
@@ -240,25 +240,25 @@ exports.changePassword = (req,res,next) => {
                         .then(([data1,meta1])=>{
                             if(data1){
                                 if(data1.affectedRows>0){
-                                    return res.json(returnResJsonObj.resJsonOjbect(false,`Password updated successfully`,noError))}
+                                    return res.json(returnResJsonObj.resJsonOjbect(false,`Senha atualizada com successo`,noError))}
                             }else{
-                                return res.json(returnResJsonObj.resJsonOjbect(true,`The attempt to update user password failed`,userError))}})
+                                return res.json(returnResJsonObj.resJsonOjbect(true,`Nao foi possivel atualizar a senha neste momento.`,userError))}})
                         .catch(err => {
                             console.log(err)
-                            return res.json(returnResJsonObj.resJsonOjbect(true,`The attempt to update user password failed`,userError))})})
+                            return res.json(returnResJsonObj.resJsonOjbect(true,`Nao foi possivel atualizar a senha neste momento.`,userError))})})
                     .catch(err => {
                         console.log(err)
-                        return res.json(returnResJsonObj.resJsonOjbect(true,`The attempt to encrypt user password failed`,userError))})
+                        return res.json(returnResJsonObj.resJsonOjbect(true,`Nao foi possivel atualizar a senha neste momento.`,userError))})
                 }else{
-                    return res.json(returnResJsonObj.resJsonOjbect(true,`Wrong current password.`,userError))}})
+                    return res.json(returnResJsonObj.resJsonOjbect(true,`Senha atual incorreta.`,userError))}})
             .catch(err => {
                 console.log(err)
-                return res.json(returnResJsonObj.resJsonOjbect(true,`The attempt to validate current user failed`,userError))})
+                return res.json(returnResJsonObj.resJsonOjbect(true,`Este usuario nao existe na nossa base de dados`,userError))})
         }else {
-            return res.json(returnResJsonObj.resJsonOjbect(true,`Could not find user in database`,userError))}})
+            return res.json(returnResJsonObj.resJsonOjbect(true,`Este usuario nao existe na nossa base de dados`,userError))}})
     .catch(err => {
         console.log(err)
-        return res.json(returnResJsonObj.resJsonOjbect(true,`Could not find user in database`,userError))})
+        return res.json(returnResJsonObj.resJsonOjbect(true,`Este usuario nao existe na nossa base de dados`,userError))})
 }
 //RENEW TOKEN==========================================================
 exports.renewToken = (req,res,next) => {
