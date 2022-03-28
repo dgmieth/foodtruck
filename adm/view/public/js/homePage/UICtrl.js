@@ -119,13 +119,13 @@ class UICtrl {
                     <div class=".container-fluid mx-auto my-auto w-75">
                         <label class="w-100">
                             Nome:
-                            <input id="field02" name="${this.forms.catering}" placeholder="Fulado de tal" type="text" class="w-75" autocomplete="off" required>
+                            <input id="field02" name="${this.forms.catering}" placeholder="Fulano de tal" type="text" class="w-75" autocomplete="off" required>
                         </label>
                     </div>
                     <div class=".container-fluid w-100" style="height: 15px!important;"></div>
                     <div class=".container-fluid mx-auto my-auto w-75">
                         <label class="w-100">
-                            Celuar:
+                            Celular:
                             <input id="field03" name="${this.forms.catering}" placeholder="(00) 00000-0000" oninput="this.value = phoneNumberMask(this.value)" type="text" class="w-75" autocomplete="off" maxlength="11" required>
                         </label>
                     </div>

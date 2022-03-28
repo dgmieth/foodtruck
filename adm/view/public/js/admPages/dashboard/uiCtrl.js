@@ -2401,7 +2401,7 @@ function returnInnerDataForCUserSubStateAndSearchMode(dataCtrl,uiCtrl,tempData,s
                     </div>
                     <div class="col-12 breakWord colNoMarging"><strong>Phone number:</strong> ${phoneNumberMask(reg.phoneNumber)}</div>
                     <div class="col-6 breakWord colNoMarging" style="text-align:left;padding-right:20px">
-                        <span><img src="/img/${reg.mobileOS.toLowerCase() === 'android' ? 'android' : 'apple'}.png" height="15" /></span>
+                        <!-- <span><img src="/img/${reg.mobileOS.toLowerCase() === 'android' ? 'android' : 'apple'}.png" height="15" /></span> -->
                     </div>
                     <div class="col-6 breakWord colNoMarging" style="text-align:right;padding-right:20px">${reg.lastLogIn !== '' && reg.lastLogIn !== null ? `<i>Last log-in: </i>${reg.lastLogIn.split(' ')[0]}` : '' }</div>
                 </div>
