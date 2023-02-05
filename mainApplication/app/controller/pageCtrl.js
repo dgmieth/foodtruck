@@ -49,5 +49,11 @@ exports.privacyPolicy = (req,res,next) => {
     }
     res.render('privacyPolicyPage', {pageTitle: name})
 }
-
+// ======================================================================
+// PRIVACY POLICY =======================================================
+// ======================================================================
+// privacy policy
+exports.homePage = (req,res,next)=>{
+    res.render('homePage',{ pageTitle: `Developer Log-In` })
+}
 

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100 w-100">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/logo500.png">
+    <!-- BOOTSTRAP CSS -->
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+    <title>Foodtruck</title>
+    <style>
+      #mainBk{
+        background-image: url("/img/kungfuBG.png");
+        background-repeat: repeat;
+        background-size: cover;
+      }
+      #mainContent{
+        background-color: white;
+      }
+      .navbar{
+        background-color: rgba(51,59,78,1)!important;
+      }
+      .event {
+          position: absolute;
+          width: 3px;
+          height: 3px;
+          border-radius: 150px;
+          bottom: 3px;
+          left: calc(50% - 1.5px);
+          content: " ";
+          display: block;
+          background: #3d8eb9;
+      }
+
+      .event.busy {
+          background: #f64747;
+      }
+      </style>
+    <!-- GOOGLE SIGN IN SCRIPT -->
+    <script>
+        function onSuccess(googleUser) {
+          console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+          console.log(googleUser)
+          console.log(googleUser.getBasicProfile())
+          appCtrl.setSecondLevelModalType=appCtrl.getSecondLevelModalTypes.registration
+          uiCtrl.showHideSecondLevelModals(appCtrl,dataCtrl)
+          document.getElementById('nome2').value = googleUser.getBasicProfile().getName()
+          document.getElementById('email2').value = googleUser.getBasicProfile().getEmail()
+        }
+        function onFailure(error) {
+        console.log(error);
+        }
+        function renderButton() {
+          gapi.signin2.render('my-signin2', {
+              'scope': 'profile email',
+              'width': 240,
+              'height': 50,
+              'longtitle': true,
+              'theme': 'dark',
+              'onsuccess': onSuccess,
+              'onfailure': onFailure
+          });
+          gapi.load('auth2', function(){
+              auth2 = gapi.auth2.init({
+                  client_id: '854097887101-gd00fq74g542fl7jhkbq3enrdmrc85rl.apps.googleusercontent.com'
+              });
+              auth2.attachClickHandler('my-signin2', {}, onSuccess, onFailure);
+
+              auth2.isSignedIn.listen(signinChanged);
+              auth2.currentUser.listen(userChanged); // This is what you use to listen for user changes
+          }); 
+          var signinChanged = function (val) {
+              console.log('Signin state changed to ', val);
+              if(val){
+                auth2.signOut().then(function () {
+                  console.log('User signed out.');
+                });
+              }
+          };
+        }
+    </script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+    <meta name="google-signin-client_id" content="854097887101-gd00fq74g542fl7jhkbq3enrdmrc85rl.apps.googleusercontent.com">
+    <!-- FLAT PICKER -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- CLIENT SIDE APPLICATION -->
+    <script src="/js/homePage/AppCtrl.js"></script>
+    <script src="/js/homePage/UICtrl.js"></script>
+    <script src="/js/homePage/DataCtrl.js"></script>
+    <script src="/js/homePage/main.js"></script>
+</head>
+<body class="h-100 w-100">
+    <div id="mainBk" class=".container-fluid h-100 w-100" style="overflow-y: auto;">
+        <!--NAV BAR-->
+        
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">
+                <img src="/img/logo500.png" width="30" height="30" alt="">Foodtruck</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav" style="padding-left: 15px;">
+              <ul class="navbar-nav">
+                <li class="nav-item active">
+                  <a class="nav-link" onclick="appCtrl.setFirstLevelModalType = appCtrl.getFirstLevelModalTypes.none;uiCtrl.showHideFirstLevelModals(appCtrl,dataCtrl)" href="#">Home</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="appCtrl.setFirstLevelModalType = appCtrl.getFirstLevelModalTypes.login;uiCtrl.showHideFirstLevelModals(appCtrl,dataCtrl);renderButton()">Área do cliente</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="appCtrl.setFirstLevelModalType = appCtrl.getFirstLevelModalTypes.personalData;uiCtrl.showHideFirstLevelModals(appCtrl,dataCtrl)" href="#">Minhas informações</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="appCtrl.setFirstLevelModalType = appCtrl.getFirstLevelModalTypes.calendar;uiCtrl.showHideFirstLevelModals(appCtrl,dataCtrl);appCtrl.configureFlatPicker(uiCtrl,dataCtrl)" href="#">Eventos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" onclick="appCtrl.setFirstLevelModalType = appCtrl.getFirstLevelModalTypes.catering;uiCtrl.showHideFirstLevelModals(appCtrl,dataCtrl)" href="#">Catering</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="/login">Área Restrita</a>
+                  </li> -->
+              </ul>
+            </div>
+          </nav>
+        <!--MAIN CONTENT-->
+        <div id="mainContent" class="container mx-auto w-75">
+            <div class=".container-fluid w-100 h-100 row" >
+              <div class="col-6 mx-auto my-auto text-center">
+                <img class="d-block w-100"  src="/img/food1.jpg">
+              </div>
+              <div class="col-6 mx-auto my-auto text-center h-100">
+                <p class="h-100" style="padding-top: 50%">Venha experimentar as delícias do autência <strong>barbecue americano</strong>. Crie uma conta conosco, faça seu log-in e veja onde, quando e qual será o menu dos nossos eventos. </p>
+
+              </div>
+            </div>
+            <div class=".container-fluid w-100 row">
+              <div class="col-6 mx-auto my-auto text-center h-100">
+                <p class="h-100" style="padding-top: 50%">São pratos <strong>irresistíveis</strong>! É impossível não querer repetir....&#128523;</p>
+              </div>
+              <div class="col-6 mx-auto my-auto text-center">
+                <img class="d-block w-100"  src="/img/food2.jpg">
+              </div>
+            </div>
+            <div class=".container-fluid w-100 row">
+              <div class="col-6 mx-auto my-auto text-center">
+                <img class="d-block w-100"  src="/img/food3.jpg">
+              </div>
+              <div class="col-6 mx-auto my-auto text-center h-100">
+                <p class="h-100" style="padding-top: 50%">São mais de 20 anos de experiência no ramo... Qualidade certa e comprovada</p>
+
+              </div>
+            </div>
+            <div id="firstLevelModal" onclick="" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-xl">
+                    <div id="firstLevelModalContent" class="modal-content">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="secondLevelModal" onclick="" class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel2" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-xl">
+              <div id="secondLevelModalContent" class="modal-content">
+                
+              </div>
+          </div>
+        </div>
+        <!--BOTTOM NAV BAR-->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark w-100">
+          <div class=".container-fluid mx-auto my-auto row">
+            <div class=".container-fluid mx-auto my-auto col-12">
+              <p style="text-align: center;color: white;">Foodtruck 2022</p>
+            </div>
+            <div class=".container-fluid mx-auto my-auto col-12">
+              <ul class="navbar-nav text-center">
+                <li class="nav-item active text-center w-100">
+                  <a class="nav-link" href="mailto:dgmieth@gmail.com">Contact us</a>
+                </li>
+              </ul>  
+            </div>
+
+          </div>
+            <!-- <div class=".container-fluid text-center mx-auto my-auto" style="width: 100%!important;">
+            </div>
+            <div class="w-100" id="bottomNav" style="padding: 15px;">
+            </div> -->
+        </nav>
+    </div>
+    
+</body>
+<!-- BOOTSTRAP SCRIPTS -->
+<script src="/js/bootstrap/jquery.min.js"></script>
+<script src="/js/bootstrap/popper.min.js"></script>
+<script src="/js/bootstrap/bootstrap.min.js"></script>
+
+</html>

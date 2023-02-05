@@ -6,14 +6,11 @@ const pageRouter = express.Router()
 const pageCtrl = require('../controller/pageCtrl')
 const authCtrl = require('../controller/authCtrl')
 // ======================================================================
-// ROOT PAGE ============================================================
-// ======================================================================
-pageRouter.get('', pageCtrl.renderLoginPage)
-// ======================================================================
 // AUTH PAGES ===========================================================
 // ======================================================================
 pageRouter.get('/login/admLogin', authCtrl.isAdministratorLoggedRedirect, pageCtrl.renderAdmiLogin)
 pageRouter.get('/login/developerLogin', authCtrl.isDeveloperLoggedRedirect, pageCtrl.renderDeveloperLogin)
+pageRouter.get('/login', pageCtrl.renderLoginPage)
 // ======================================================================
 // ADMINISTRATIVE PAGE ==================================================
 // ======================================================================
@@ -27,6 +24,10 @@ pageRouter.get('/developerDashboard', authCtrl.isAuth, pageCtrl.developerDashboa
 // ======================================================================
 pageRouter.get('/app', pageCtrl.privacyPolicy)
 pageRouter.get('/web', pageCtrl.privacyPolicy)
+// ======================================================================
+// ROOT PAGE ============================================================
+// ======================================================================
+pageRouter.get('/', pageCtrl.homePage)
 
 //exporting router
 module.exports = pageRouter

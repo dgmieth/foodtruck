@@ -1,5 +1,5 @@
 //support funcionts
-const datetimeFormatter = require('../supportFunctions/datetimeFormatter')
+const datetimeFormatter = require('./datetimeFormatter')
 //sorter functionssortOrdersForActiveFinishedCookingDates
 exports.sortCookingDates = (data) => {
     const dataArray = []

@@ -135,13 +135,15 @@ exports.openToOrders = (req,res,next) => {
         if(data1[0]){
             if((data1[2][0])['@returnCode']===dbErrorReturnCode){
                 return returnErroMessage(`Could not open to orders this cooking calendar date.`)}
+            console.log(1)
             returnObject.hasErrors = false
             returnObject.data = data1
             var notifMsg = `Hey!!! The ${data1[0][0].cookingDate} event is open to orders. Check it out on the app's Calendar!`
             return sendNotification.sendNotif(req,res,next,parseInt(req.body.cookingDate),notifMsg,'all','openToOrders')}
+            console.log(2)
         return returnErroMessage(`Could not open to orders this cooking calendar date.`)})
     .catch(err => {
-        console.log(err)
+        console.log('openToOrders-> ',err)
         return returnErroMessage(`Could not open to orders this cooking calendar date. ${err}`)})
 }
 // COOKING DATE -> OPEN TO ORDERS ======================================

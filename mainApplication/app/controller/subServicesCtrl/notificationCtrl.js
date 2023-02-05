@@ -162,26 +162,26 @@ exports.sendNotifToAll = (req,res,next)=>{
 //cron schedule
 // =====================================================================================
 //first notification is sent at 8:15am
-cron.schedule('0 04 8 * * *', () => {
-    sendCronNotif(`notifNumber_08:15`)
-}, {
-scheduled: true,
-timezone: "America/New_York"
-});
-//first notification is sent at 2:15pm
-cron.schedule('0 05 14 * * *', () => {
-    sendCronNotif(`notifNumber_14:15`)
-}, {
-scheduled: true,
-timezone: "America/New_York"
-});
-//first notification is sent at 6:15pm
-cron.schedule('0 06 18 * * *', () => {
-    sendCronNotif(`notifNumber_18:15`)
-}, {
-scheduled: true,
-timezone: "America/New_York"
-});
+// cron.schedule('0 04 8 * * *', () => {
+//     sendCronNotif(`notifNumber_08:15`)
+// }, {
+// scheduled: true,
+// timezone: "America/New_York"
+// });
+// //first notification is sent at 2:15pm
+// cron.schedule('0 05 14 * * *', () => {
+//     sendCronNotif(`notifNumber_14:15`)
+// }, {
+// scheduled: true,
+// timezone: "America/New_York"
+// });
+// //first notification is sent at 6:15pm
+// cron.schedule('0 06 18 * * *', () => {
+//     sendCronNotif(`notifNumber_18:15`)
+// }, {
+// scheduled: true,
+// timezone: "America/New_York"
+// });
 
 //function to send cron notification
 function sendCronNotif(cronScheduler){

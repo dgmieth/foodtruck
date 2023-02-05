@@ -60,7 +60,7 @@
             left:-200px;
             width:200px;
             height:92%;
-            background:#212529;
+            background:rgba(51,59,78,1)!important;
             transition: all 300ms linear;
             z-index: 10;
           }
@@ -196,21 +196,21 @@
             </div>  
             <div class="list h-100" style="overflow-y: auto;">
                 <div style="margin:.3px;border: white 0.5px solid;">
-                    <p style="color: white;margin: 0;padding: 0;"><i>Quick actions</i></p>
-                    <button id="genInvitationCodeStateBtn" class="appStateBtns  item">Generate invitation code</button>
-                    <button id="orderDeliveryStateBtn" class="appStateBtns  item">Order delivery</button>
+                    <p style="color: white;margin: 0;padding: 0;"><i>Acoes rapidas</i></p>
+                    <!--<button id="genInvitationCodeStateBtn" class="appStateBtns  item">Generate invitation code</button>-->
+                    <button id="orderDeliveryStateBtn" class="appStateBtns  item">Entregar pedidos</button>
                 </div>
-                <button id="usersStateBtn" class="appStateBtns  item">Users</button>
+                <button id="usersStateBtn" class="appStateBtns  item">Usuarios</button>
                 <!--<button id="menuStateBtn" class="appStateBtns  item">Menu</button>-->
-                <button id="cookingCalendarStateBtn" class="appStateBtns  item">Cooking calendar</button>
-                <button id="dishStateBtn" class="appStateBtns  item">Dish</button>
-                <button id="ordersStateBtn" class="appStateBtns  item">Orders</button>
+                <button id="cookingCalendarStateBtn" class="appStateBtns  item">Eventos</button>
+                <button id="dishStateBtn" class="appStateBtns  item">Pratos</button>
+                <button id="ordersStateBtn" class="appStateBtns  item">Pedidos</button>
                 <button id="catorStateBtn" class="appStateBtns  item">Catering</button>
-                <button id="reportsStateBtn" class="appStateBtns  item">Reports</button>
+                <!--<button id="reportsStateBtn" class="appStateBtns  item">Reports</button>-->
                 
                 <div style="margin:.3px;border: rgb(236, 71, 71) 0.5px solid;">
-                    <p style="color: white;margin: 0;padding: 0;"><i>System mangement</i></p>
-                    <button id="manageAccessStateBtn" class="appStateBtns  item">Manage access</button>
+                    <p style="color: white;margin: 0;padding: 0;"><i>Gerenciar sistema</i></p>
+                    <button id="manageAccessStateBtn" class="appStateBtns  item">Acessos</button>
                 </div>
                 <button id="logoutStateBtn" class="appStateBtns  item">Log-out</button>
             </div>
@@ -240,15 +240,11 @@
     <%- include('headerFooter/login/loginFooter.ejs') %>
 </body>
 <!-- SCRIPT FILES START HERE -->
-<% if (devMode){ %>
-    <script>
-      const socketIoDNS = "https://dev.api.kungfubbq-dayton.com"
-    </script>
-    <script src="https://dev.api.kungfubbq-dayton.com/socket.io/socket.io.js"></script>
-<% }else{ %>
-    <script>const socketIoDNS = "https://api.kungfubbq-dayton.com"</script>
-    <script src="https://api.kungfubbq-dayton.com/socket.io/socket.io.js"></script>
-<% } %>
+<script>
+  const socketIoDNS = "https://apifoodtruck.dgmieth.live"
+</script>
+<script src="https://apifoodtruck.dgmieth.live/socket.io/socket.io.js"></script>
+
     <!-- BOOTSTRAP SCRIPTS -->
     <script src="/js/bootstrap/jquery.min.js"></script>
     <script src="/js/bootstrap/popper.min.js"></script>

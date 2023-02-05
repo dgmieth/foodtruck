@@ -720,14 +720,14 @@ class AppCtrl {
 // APP STATE
     loadAppStateEventListeners(dataCtrl,uiCtrl){
         const appStateIds = uiCtrl.getIDs().sidebar.btns
-        document.getElementById(appStateIds.invitationCode).addEventListener('click',(e)=>{
-            uiCtrl.showHideSpinner('show')
-            this.setAppState = this.getAppStatesList._INVITATIONCODE
-            this.setAppSubState = this.getAppSubStatesList._INITIAL
-            uiCtrl.changeUIInterfaceAccordingToAppState(dataCtrl,this)
-            uiCtrl.showHideSpinner('hide')
-            this.toggleSidebar(null,uiCtrl)  
-        })
+        // document.getElementById(appStateIds.invitationCode).addEventListener('click',(e)=>{
+        //     uiCtrl.showHideSpinner('show')
+        //     this.setAppState = this.getAppStatesList._INVITATIONCODE
+        //     this.setAppSubState = this.getAppSubStatesList._INITIAL
+        //     uiCtrl.changeUIInterfaceAccordingToAppState(dataCtrl,this)
+        //     uiCtrl.showHideSpinner('hide')
+        //     this.toggleSidebar(null,uiCtrl)  
+        // })
         document.getElementById(appStateIds.orderDelivery).addEventListener('click',(e)=>{
             uiCtrl.showHideSpinner('show')
             this.previousState = this.getAppState
@@ -843,14 +843,14 @@ class AppCtrl {
                 console.log('error fetchAllMessages')})
             this.toggleSidebar(null,uiCtrl)
         })
-        document.getElementById(appStateIds.reports).addEventListener('click',(e)=>{
-            uiCtrl.showHideSpinner('show')
-            this.setAppState = this.getAppStatesList._REPORTS
-            this.setAppSubState = this.getAppSubStatesList._INITIAL
-            uiCtrl.changeUIInterfaceAccordingToAppState(dataCtrl,this)
-            this.toggleSidebar(null,uiCtrl)
-            uiCtrl.showHideSpinner('hide')
-        })
+        // document.getElementById(appStateIds.reports).addEventListener('click',(e)=>{
+        //     uiCtrl.showHideSpinner('show')
+        //     this.setAppState = this.getAppStatesList._REPORTS
+        //     this.setAppSubState = this.getAppSubStatesList._INITIAL
+        //     uiCtrl.changeUIInterfaceAccordingToAppState(dataCtrl,this)
+        //     this.toggleSidebar(null,uiCtrl)
+        //     uiCtrl.showHideSpinner('hide')
+        // })
         document.getElementById(appStateIds.manageAccess).addEventListener('click',(e)=>{
             uiCtrl.showHideSpinner('show')
             this.setAppState = this.getAppStatesList._MANAGEACCESS
